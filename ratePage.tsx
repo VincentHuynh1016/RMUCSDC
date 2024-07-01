@@ -4,7 +4,7 @@ import Link from "next/link";
 import React, { useState } from "react";
 
 
-export default function ratingPage() {
+function ratingPage() {
   const [racoonRating, setRacoonRating] = useState(0);
   const [wifiRating, setWifiRating] = useState(0);
   const [locationRating, setlocationRating] = useState(0);
@@ -12,6 +12,7 @@ export default function ratingPage() {
   const [dormRating, setdormRating] = useState(0);
   const [safetyRating, setsafetyRating] = useState(0);
   const [amenitiesRating, setamenitiesRating] = useState(0);
+
 
   const handleRacoonRating = (star: number) => {
     setRacoonRating(racoonRating === star ? 0 : star);
@@ -41,30 +42,52 @@ export default function ratingPage() {
     setamenitiesRating(amenitiesRating === star ? 0 : star);
   };
 
-  const sixth = async (event: { preventDefault: () => void; }) => {
-    event.preventDefault();
+  const [message, setMessage] = useState("");
+  
+
+  const submitRating = async () => {
     try {
-      const res = await fetch("http://localhost:5000/submitRating", {
+      const response = await fetch("http://localhost:8080/submitRating", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
           racoonRating: racoonRating,
+          wifiRating: wifiRating,
+          locationRating: locationRating,
+          diningHallRating: diningHallRating,
+          dormRating: dormRating,
+          safetyRating: safetyRating,
+          amenitiesRating: amenitiesRating,
         }),
       });
-      if (res.ok) {
-        console.log("It works");
+
+      const data = await response.json();
+      if (response.ok) {
+        setMessage(data.message);
+        setRacoonRating(0);
+        setWifiRating(0);
+        setlocationRating(0);
+        setdiningHallRating(0);
+        setdormRating(0);
+        setsafetyRating(0);
+        setamenitiesRating(0);
       } else {
-        throw new Error("Submission failed");
+        throw new Error(data.message || "Submission failed");
       }
     } catch (error) {
       console.error("Error:", error);
+      setMessage("Failed to connect to server");
     }
   };
 
+
   return (
-    <div className="w-full flex flex-col bg-white items-center">
+    <div
+      id="wrapper"
+      className="w-full flex flex-col bg-white items-center overflow-hidden"
+    >
       <div className="navbar bg-black justify-left">
         <Link href="/ratemydorm">
           <div className="btn btn-ghost text-xl text-black font-bold">
@@ -88,361 +111,264 @@ export default function ratingPage() {
           </div>
         </Link>
       </div>
-      {/* I am adding a FORM method type POST here idk what it does rn but I want it to connect to my database/backend */}
-      <form onSubmit={sixth}>
-        <div
-          className="flex justify-between items-center px-4 py-2 border rounded shadow mt-20"
-          style={{ width: "800px", height: "120px" }}
-        >
-          <div style={{ maxWidth: "calc(100% - 5rem)" }}>
-            {" "}
-            <p className="text-2xl font-semibold">
-              <span style={{ color: "black" }}>Rate </span>
-              <span style={{ color: "black" }}>the </span>
-              <span style={{ color: "#3F92F2" }}>Racoon </span>
-              <span style={{ color: "#3F92F2" }}>Sighting</span>
-            </p>
-            <p
-              className="text-base text-gray-600"
-              style={{ lineHeight: "1.5" }}
+
+      <div
+        className="flex justify-between items-center px-4 py-2 border rounded shadow mt-10"
+        style={{ width: "800px", height: "120px" }}
+      >
+        <div style={{ maxWidth: "calc(100% - 5rem)" }}>
+          {" "}
+          <p className="text-2xl font-semibold">
+            <span style={{ color: "black" }}>Rate </span>
+            <span style={{ color: "black" }}>the </span>
+            <span style={{ color: "#3F92F2" }}>Racoon </span>
+            <span style={{ color: "#3F92F2" }}>Sighting</span>
+          </p>
+          <p className="text-base text-gray-600" style={{ lineHeight: "1.5" }}>
+            Consider the amount of racoons you have seen in the area
+          </p>
+        </div>
+
+        <div className="rating">
+          {[1, 2, 3, 4, 5].map((star) => (
+            <button
+              key={star}
+              style={{
+                background: "none",
+                border: "none",
+                color: racoonRating >= star ? "#ffd700" : "#d3d3d3",
+                fontSize: "2rem",
+                cursor: "pointer",
+              }}
+              onClick={() => handleRacoonRating(star)}
             >
-              Consider the amount of racoons you have seen in the area
-            </p>
-          </div>
+              ★
+            </button>
+          ))}
+        </div>
+      </div>
 
-          <div className="rating">
-            {[1, 2, 3, 4, 5].map((star) => (
-              <label key={star} className="star-label">
-                <input
-                  type="radio"
-                  name="racoonSighting"
-                  value={star}
-                  className="mask mask-star-2 cursor-pointer"
-                  style={{
-                    backgroundColor:
-                      racoonRating >= star ? "#ffd700" : "#d3d3d3", // Yellow or Gray
-                    appearance: "none", // Hides the default radio input
-                    width: "2rem", // Adjust the size of the star
-                    height: "2rem", // Adjust the size of the star
-                  }}
-                  checked={racoonRating === star} // Checks all stars up to the selected rating
-                  onChange={() => handleRacoonRating(star)}
-                  // Adding this onClick to make sure it captures the click event properly
-                  onClick={() => handleRacoonRating(star)}
-                />
-              </label>
-            ))}
-          </div>
+      <div
+        className="flex justify-between items-center px-4 py-2 border rounded shadow mt-10"
+        style={{ width: "800px", height: "120px" }}
+      >
+        <div style={{ maxWidth: "calc(100% - 5rem)" }}>
+          {" "}
+          <p className="text-2xl font-semibold">
+            <span style={{ color: "black" }}>Rate </span>
+            <span style={{ color: "black" }}>the </span>
+            <span style={{ color: "#3F92F2" }}>Wifi </span>
+          </p>
+          <p className="text-base text-gray-600" style={{ lineHeight: "1.5" }}>
+            Consider the speed and performance
+          </p>
         </div>
 
-        <div style={{ height: "20px" }}></div>
-
-        <div
-          className="flex justify-between items-center px-4 py-2 border rounded shadow"
-          style={{ width: "800px", height: "120px" }}
-        >
-          <div style={{ maxWidth: "calc(100% - 5rem)" }}>
-            {" "}
-            <p className="text-2xl font-semibold">
-              <span style={{ color: "black" }}>Rate </span>
-              <span style={{ color: "black" }}>the </span>
-              <span style={{ color: "#3F92F2" }}>Wifi </span>
-            </p>
-            <p
-              className="text-base text-gray-600"
-              style={{ lineHeight: "1.5" }}
+        <div className="rating">
+          {[1, 2, 3, 4, 5].map((star) => (
+            <button
+              key={star}
+              style={{
+                background: "none",
+                border: "none",
+                color: wifiRating >= star ? "#ffd700" : "#d3d3d3",
+                fontSize: "2rem",
+                cursor: "pointer",
+              }}
+              onClick={() => handleWifiRating(star)}
             >
-              Consider the speed and performance
-            </p>
-          </div>
+              ★
+            </button>
+          ))}
+        </div>
+      </div>
 
-          <div className="rating">
-            {[1, 2, 3, 4, 5].map((star) => (
-              <label key={star} className="star-label">
-                <input
-                  type="radio"
-                  name="wifi"
-                  value={star}
-                  className="mask mask-star-2 cursor-pointer"
-                  style={{
-                    backgroundColor: wifiRating >= star ? "#ffd700" : "#d3d3d3", // Yellow or Gray
-                    appearance: "none", // Hides the default radio input
-                    width: "2rem", // Adjust the size of the star
-                    height: "2rem", // Adjust the size of the star
-                  }}
-                  checked={wifiRating >= star} // Checks all stars up to the selected rating
-                  onChange={() => handleWifiRating(star)}
-                  // Adding this onClick to make sure it captures the click event properly
-                  onClick={() => handleWifiRating(star)}
-                />
-              </label>
-            ))}
-          </div>
+      <div
+        className="flex justify-between items-center px-4 py-2 border rounded shadow mt-10"
+        style={{ width: "800px", height: "120px" }}
+      >
+        <div style={{ maxWidth: "calc(100% - 5rem)" }}>
+          {" "}
+          <p className="text-2xl font-semibold">
+            <span style={{ color: "black" }}>Rate </span>
+            <span style={{ color: "black" }}>the </span>
+            <span style={{ color: "#3F92F2" }}>Location </span>
+          </p>
+          <p className="text-base text-gray-600" style={{ lineHeight: "1.5" }}>
+            Consider how near it is to everything else
+          </p>
         </div>
 
-        <div style={{ height: "20px" }}></div>
-
-        <div
-          className="flex justify-between items-center px-4 py-2 border rounded shadow"
-          style={{ width: "800px", height: "120px" }}
-        >
-          <div style={{ maxWidth: "calc(100% - 5rem)" }}>
-            {" "}
-            <p className="text-2xl font-semibold">
-              <span style={{ color: "black" }}>Rate </span>
-              <span style={{ color: "black" }}>the </span>
-              <span style={{ color: "#3F92F2" }}>Location </span>
-            </p>
-            <p
-              className="text-base text-gray-600"
-              style={{ lineHeight: "1.5" }}
+        <div className="rating">
+          {[1, 2, 3, 4, 5].map((star) => (
+            <button
+              key={star}
+              style={{
+                background: "none",
+                border: "none",
+                color: locationRating >= star ? "#ffd700" : "#d3d3d3",
+                fontSize: "2rem",
+                cursor: "pointer",
+              }}
+              onClick={() => handlelocationRating(star)}
             >
-              Consider how near it is to everything else
-            </p>
-          </div>
+              ★
+            </button>
+          ))}
+        </div>
+      </div>
 
-          <div className="rating">
-            {[1, 2, 3, 4, 5].map((star) => (
-              <label key={star} className="star-label">
-                <input
-                  type="radio"
-                  name="location"
-                  value={star}
-                  className="mask mask-star-2 cursor-pointer"
-                  style={{
-                    backgroundColor:
-                      locationRating >= star ? "#ffd700" : "#d3d3d3", // Yellow or Gray
-                    appearance: "none", // Hides the default radio input
-                    width: "2rem", // Adjust the size of the star
-                    height: "2rem", // Adjust the size of the star
-                  }}
-                  checked={locationRating >= star} // Checks all stars up to the selected rating
-                  onChange={() => handlelocationRating(star)}
-                  // Adding this onClick to make sure it captures the click event properly
-                  onClick={() => handlelocationRating(star)}
-                />
-              </label>
-            ))}
-          </div>
+      <div
+        className="flex justify-between items-center px-4 py-2 border rounded shadow mt-10"
+        style={{ width: "800px", height: "120px" }}
+      >
+        <div style={{ maxWidth: "calc(100% - 5rem)" }}>
+          {" "}
+          <p className="text-2xl font-semibold">
+            <span style={{ color: "black" }}>Rate </span>
+            <span style={{ color: "black" }}>the </span>
+            <span style={{ color: "#3F92F2" }}>Dining </span>
+            <span style={{ color: "#3F92F2" }}>Hall </span>
+            <span style={{ color: "#3F92F2" }}>Food </span>
+          </p>
+          <p className="text-base text-gray-600" style={{ lineHeight: "1.5" }}>
+            Consider how tasty the dining hall food is
+          </p>
         </div>
 
-        <div style={{ height: "20px" }}></div>
-
-        <div
-          className="flex justify-between items-center px-4 py-2 border rounded shadow"
-          style={{ width: "800px", height: "120px" }}
-        >
-          <div style={{ maxWidth: "calc(100% - 5rem)" }}>
-            {" "}
-            <p className="text-2xl font-semibold">
-              <span style={{ color: "black" }}>Rate </span>
-              <span style={{ color: "black" }}>the </span>
-              <span style={{ color: "#3F92F2" }}>Dining </span>
-              <span style={{ color: "#3F92F2" }}>Hall </span>
-              <span style={{ color: "#3F92F2" }}>Food </span>
-            </p>
-            <p
-              className="text-base text-gray-600"
-              style={{ lineHeight: "1.5" }}
+        <div className="rating">
+          {[1, 2, 3, 4, 5].map((star) => (
+            <button
+              key={star}
+              style={{
+                background: "none",
+                border: "none",
+                color: diningHallRating >= star ? "#ffd700" : "#d3d3d3",
+                fontSize: "2rem",
+                cursor: "pointer",
+              }}
+              onClick={() => handlediningHallRating(star)}
             >
-              Consider how tasty the dining hall food is
-            </p>
-          </div>
+              ★
+            </button>
+          ))}
+        </div>
+      </div>
 
-          <div className="rating">
-            {[1, 2, 3, 4, 5].map((star) => (
-              <label key={star} className="star-label">
-                <input
-                  type="radio"
-                  name="diningHall"
-                  value={star}
-                  className="mask mask-star-2 cursor-pointer"
-                  style={{
-                    backgroundColor:
-                      diningHallRating >= star ? "#ffd700" : "#d3d3d3", // Yellow or Gray
-                    appearance: "none", // Hides the default radio input
-                    width: "2rem", // Adjust the size of the star
-                    height: "2rem", // Adjust the size of the star
-                  }}
-                  checked={diningHallRating >= star} // Checks all stars up to the selected rating
-                  onChange={() => handlediningHallRating(star)}
-                  // Adding this onClick to make sure it captures the click event properly
-                  onClick={() => handlediningHallRating(star)}
-                />
-              </label>
-            ))}
-          </div>
+      <div
+        className="flex justify-between items-center px-4 py-2 border rounded shadow mt-10"
+        style={{ width: "800px", height: "120px" }}
+      >
+        <div style={{ maxWidth: "calc(100% - 5rem)" }}>
+          {" "}
+          <p className="text-2xl font-semibold">
+            <span style={{ color: "black" }}>Rate </span>
+            <span style={{ color: "black" }}>the </span>
+            <span style={{ color: "#3F92F2" }}>Dorm </span>
+          </p>
+          <p className="text-base text-gray-600" style={{ lineHeight: "1.5" }}>
+            Consider the look and vibe of the room
+          </p>
         </div>
 
-        <div style={{ height: "20px" }}></div>
-
-        <div
-          className="flex justify-between items-center px-4 py-2 border rounded shadow"
-          style={{ width: "800px", height: "120px" }}
-        >
-          <div style={{ maxWidth: "calc(100% - 5rem)" }}>
-            {" "}
-            <p className="text-2xl font-semibold">
-              <span style={{ color: "black" }}>Rate </span>
-              <span style={{ color: "black" }}>the </span>
-              <span style={{ color: "#3F92F2" }}>Dorm </span>
-            </p>
-            <p
-              className="text-base text-gray-600"
-              style={{ lineHeight: "1.5" }}
+        <div className="rating">
+          {[1, 2, 3, 4, 5].map((star) => (
+            <button
+              key={star}
+              style={{
+                background: "none",
+                border: "none",
+                color: dormRating >= star ? "#ffd700" : "#d3d3d3",
+                fontSize: "2rem",
+                cursor: "pointer",
+              }}
+              onClick={() => handleddormRating(star)}
             >
-              Consider the look and vibe of the room
-            </p>
-          </div>
+              ★
+            </button>
+          ))}
+        </div>
+      </div>
 
-          <div className="rating">
-            {[1, 2, 3, 4, 5].map((star) => (
-              <label key={star} className="star-label">
-                <input
-                  type="radio"
-                  name="dorm"
-                  value={star}
-                  className="mask mask-star-2 cursor-pointer"
-                  style={{
-                    backgroundColor: dormRating >= star ? "#ffd700" : "#d3d3d3", // Yellow or Gray
-                    appearance: "none", // Hides the default radio input
-                    width: "2rem", // Adjust the size of the star
-                    height: "2rem", // Adjust the size of the star
-                  }}
-                  checked={dormRating >= star} // Checks all stars up to the selected rating
-                  onChange={() => handleddormRating(star)}
-                  // Adding this onClick to make sure it captures the click event properly
-                  onClick={() => handleddormRating(star)}
-                />
-              </label>
-            ))}
-          </div>
+      <div
+        className="flex justify-between items-center px-4 py-2 border rounded shadow mt-10"
+        style={{ width: "800px", height: "120px" }}
+      >
+        <div style={{ maxWidth: "calc(100% - 5rem)" }}>
+          {" "}
+          <p className="text-2xl font-semibold">
+            <span style={{ color: "black" }}>Rate </span>
+            <span style={{ color: "black" }}>the </span>
+            <span style={{ color: "#3F92F2" }}>Safety </span>
+          </p>
+          <p className="text-base text-gray-600" style={{ lineHeight: "1.5" }}>
+            Consider your surroundings
+          </p>
         </div>
 
-        <div style={{ height: "20px" }}></div>
-
-        <div
-          className="flex justify-between items-center px-4 py-2 border rounded shadow"
-          style={{ width: "800px", height: "120px" }}
-        >
-          <div style={{ maxWidth: "calc(100% - 5rem)" }}>
-            {" "}
-            <p className="text-2xl font-semibold">
-              <span style={{ color: "black" }}>Rate </span>
-              <span style={{ color: "black" }}>the </span>
-              <span style={{ color: "#3F92F2" }}>Safety </span>
-            </p>
-            <p
-              className="text-base text-gray-600"
-              style={{ lineHeight: "1.5" }}
+        <div className="rating">
+          {[1, 2, 3, 4, 5].map((star) => (
+            <button
+              key={star}
+              style={{
+                background: "none",
+                border: "none",
+                color: safetyRating >= star ? "#ffd700" : "#d3d3d3",
+                fontSize: "2rem",
+                cursor: "pointer",
+              }}
+              onClick={() => handlesafetyRating(star)}
             >
-              Consider the look and vibe of the room
-            </p>
-          </div>
+              ★
+            </button>
+          ))}
+        </div>
+      </div>
 
-          <div className="rating">
-            {[1, 2, 3, 4, 5].map((star) => (
-              <label key={star} className="star-label">
-                <input
-                  type="radio"
-                  name="safety"
-                  value={star}
-                  className="mask mask-star-2 cursor-pointer"
-                  style={{
-                    backgroundColor:
-                      safetyRating >= star ? "#ffd700" : "#d3d3d3", // Yellow or Gray
-                    appearance: "none", // Hides the default radio input
-                    width: "2rem", // Adjust the size of the star
-                    height: "2rem", // Adjust the size of the star
-                  }}
-                  checked={safetyRating >= star} // Checks all stars up to the selected rating
-                  onChange={() => handlesafetyRating(star)}
-                  // Adding this onClick to make sure it captures the click event properly
-                  onClick={() => handlesafetyRating(star)}
-                />
-              </label>
-            ))}
-          </div>
+      <div
+        className="flex justify-between items-center px-4 py-2 border rounded shadow mt-10"
+        style={{ width: "800px", height: "120px" }}
+      >
+        <div style={{ maxWidth: "calc(100% - 5rem)" }}>
+          {" "}
+          <p className="text-2xl font-semibold">
+            <span style={{ color: "black" }}>Rate </span>
+            <span style={{ color: "black" }}>the </span>
+            <span style={{ color: "#3F92F2" }}>Amenities </span>
+          </p>
+          <p className="text-base text-gray-600" style={{ lineHeight: "1.5" }}>
+            Consider the kitchen and resources available
+          </p>
         </div>
 
-        <div style={{ height: "20px" }}></div>
-
-        <div
-          className="flex justify-between items-center px-4 py-2 border rounded shadow"
-          style={{ width: "800px", height: "120px" }}
-        >
-          <div style={{ maxWidth: "calc(100% - 5rem)" }}>
-            {" "}
-            <p className="text-2xl font-semibold">
-              <span style={{ color: "black" }}>Rate </span>
-              <span style={{ color: "black" }}>the </span>
-              <span style={{ color: "#3F92F2" }}>Amenities </span>
-            </p>
-            <p
-              className="text-base text-gray-600"
-              style={{ lineHeight: "1.5" }}
+        <div className="rating">
+          {[1, 2, 3, 4, 5].map((star) => (
+            <button
+              key={star}
+              style={{
+                background: "none",
+                border: "none",
+                color: amenitiesRating >= star ? "#ffd700" : "#d3d3d3",
+                fontSize: "2rem",
+                cursor: "pointer",
+              }}
+              onClick={() => handleamenitiesRating(star)}
             >
-              Consider the kitchen and resources available
-            </p>
-          </div>
-
-          <div className="rating">
-            {[1, 2, 3, 4, 5].map((star) => (
-              <label key={star} className="star-label">
-                <input
-                  type="radio"
-                  name="amentities"
-                  value={star}
-                  className="mask mask-star-2 cursor-pointer"
-                  style={{
-                    backgroundColor:
-                      amenitiesRating >= star ? "#ffd700" : "#d3d3d3", // Yellow or Gray
-                    appearance: "none", // Hides the default radio input
-                    width: "2rem", // Adjust the size of the star
-                    height: "2rem", // Adjust the size of the star
-                  }}
-                  checked={amenitiesRating >= star} // Checks all stars up to the selected rating
-                  onChange={() => handleamenitiesRating(star)}
-                  // Adding this onClick to make sure it captures the click event properly
-                  onClick={() => handleamenitiesRating(star)}
-                />
-              </label>
-            ))}
-          </div>
+              ★
+            </button>
+          ))}
         </div>
+      </div>
 
-        <div className="flex flex-col items-center mt-10">
-          <div style={{ width: "800px" }}>
-            <p className="text-2xl font-semibold">
-              <span style={{ color: "black" }}>Write </span>
-              <span style={{ color: "black" }}>a </span>
-              <span style={{ color: "#3F92F2" }}>Review</span>
-            </p>
-            <p className="text-base text-gray-600 mb-4">
-              Share some pros, cons and what to expect when living at Sixth
-              College
-            </p>
-            <textarea
-              className="w-full border rounded p-2 bg-white text-black"
-              style={{ height: "200px", borderColor: "#3F92F2" }}
-              placeholder="Write a helpful review that's at least 100 characters."
-            />
-          </div>
-        </div>
-
-        <div style={{ height: "20px" }}></div>
-
-        <div className="flex item-center justify-center">
-          <button
-            type="submit"
-            className="btn btn-active text-white bg-sky-400	flex"
-          >
-            Submit Rating
-          </button>
-        </div>
-      </form>
-
-      <div style={{ height: "100px" }}></div>
+      <button
+        onClick={submitRating}
+        className="btn btn-active text-white bg-sky-400 mt-4"
+      >
+        Submit Rating
+      </button>
+      {message && <p>{message}</p>}
     </div>
   );
 }
+
+export default ratingPage;
