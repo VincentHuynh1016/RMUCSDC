@@ -19,6 +19,7 @@ def submit_rating():
     dormRatings = data.get('dormRating',0)
     safety_Ratings = data.get('safetyRating', 0)
     amentities_rating = data.get('amenitiesRating', 0)
+    comment = data.get('comment', "")
 
     try:
         # Insert the ratings into MongoDB
@@ -30,6 +31,7 @@ def submit_rating():
             "dorm_ratings": dormRatings,
             "safety_ratings": safety_Ratings,
             "amenities_rating": amentities_rating,
+            "comment": comment,
 
         })
         return jsonify({"success": True, "message": "Ratings submitted successfully"}), 200
