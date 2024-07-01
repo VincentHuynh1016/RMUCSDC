@@ -7,19 +7,22 @@ app.config["MONGO_URI"] = "mongodb://localhost:27017/myDatabase"
 mongo = PyMongo(app)
 CORS(app)
 
-@app.route('/api/submitRating', methods=['POST'])
+@app.route('/submitRating', methods=['POST'])
 def submit_rating():
     data = request.get_json()
-    happinessRating = data.get('happinessRating')
-
-    if happinessRating is None:
-        return jsonify({"success": False, "message": "No rating provided"}), 400
+    
+    # Retrieve each rating from the incoming JSON
+    racoon_rating = data.get('racoonRating', 0)
 
     try:
-        mongo.db.happinessRatings.insert_one({"rating": happinessRating})
-        return jsonify({"success": True, "message": "Rating submitted successfully"}), 200
+        # Insert the ratings into MongoDB
+        mongo.db.ratings.insert_one({
+            "racoon_rating": racoon_rating,
+        })
+        return jsonify({"success": True, "message": "Ratings submitted successfully"}), 200
     except Exception as e:
-        return jsonify({"success": False, "message": f"Database error: {e}"}), 500
+        print(f"Error inserting data: {e}")
+        return jsonify({"success": False, "message": "Database error"}), 500
 
 if __name__ == '__main__':
     app.run(debug=True, port = 8080)
