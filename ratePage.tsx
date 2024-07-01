@@ -12,6 +12,7 @@ function ratingPage() {
   const [dormRating, setdormRating] = useState(0);
   const [safetyRating, setsafetyRating] = useState(0);
   const [amenitiesRating, setamenitiesRating] = useState(0);
+  const [comment, setComment] = useState("");
 
 
   const handleRacoonRating = (star: number) => {
@@ -42,6 +43,12 @@ function ratingPage() {
     setamenitiesRating(amenitiesRating === star ? 0 : star);
   };
 
+  const handleCommentChange = (
+    event: React.ChangeEvent<HTMLTextAreaElement>
+  ) => {
+    setComment(event.target.value);
+  };
+
   const [message, setMessage] = useState("");
   
 
@@ -60,6 +67,7 @@ function ratingPage() {
           dormRating: dormRating,
           safetyRating: safetyRating,
           amenitiesRating: amenitiesRating,
+          comment: comment,
         }),
       });
 
@@ -73,6 +81,9 @@ function ratingPage() {
         setdormRating(0);
         setsafetyRating(0);
         setamenitiesRating(0);
+        setComment("");
+
+        window.history.back();
       } else {
         throw new Error(data.message || "Submission failed");
       }
@@ -358,6 +369,38 @@ function ratingPage() {
             </button>
           ))}
         </div>
+      </div>
+
+      <div
+        className="container flex flex-col justify-between items-start px-4 py-2 border rounded shadow mt-10"
+        style={{ width: "800px", height: "300px" }}
+      >
+        <div style={{ maxWidth: "calc(100% - 5rem)" }}>
+          <p className="text-2xl font-semibold item-left justify-start">
+            <span style={{ color: "black" }}>Write a </span>
+            <span style={{ color: "#3F92F2" }}>comment</span>
+          </p>
+          <p className="text-base text-gray-600" style={{ lineHeight: "1.5" }}>
+            Share the pros, cons
+          </p>
+        </div>
+        <textarea
+          value={comment}
+          onChange={handleCommentChange}
+          placeholder="Write a helpful comment that's at least 100 characters."
+          className="w-full mt-4 p-2 border rounded"
+          style={{
+            width: "100%",
+            height: "200px",
+            borderColor: "#d3d3d3",
+            outline: "none",
+            boxShadow: "0 0 0 1px #d3d3d3",
+            fontSize: "1rem",
+            backgroundColor: "#fff",
+            color: "#000",
+            resize: "none",
+          }}
+        />
       </div>
 
       <button
