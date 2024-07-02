@@ -9,8 +9,8 @@ app.config["MONGO_URI"] = "mongodb://localhost:27017/myDatabase"
 mongo = PyMongo(app)
 CORS(app)
 
-@app.route('/submitRating', methods=['POST'])
-def submit_rating():
+@app.route('/sixthRating', methods=['POST'])
+def sixth_Ratings():
     data = request.get_json()
     
     # Retrieve each rating from the incoming JSON
@@ -27,7 +27,7 @@ def submit_rating():
 
     try:
         # Insert the ratings into MongoDB
-        mongo.db.ratings.insert_one({
+        mongo.db.sixthRatings.insert_one({
             "racoon_rating": racoon_rating,
             "wifi_rating": wifi_rating,
             "location_rating": location_rating,
@@ -49,14 +49,40 @@ def submit_rating():
 @app.route('/getRatings', methods=['GET'])
 def get_ratings():
     try:
-        ratings = list(mongo.db.ratings.find())
+        ratings = list(mongo.db.sixthRatings.find())
         for rating in ratings:
             rating['_id'] = str(rating['_id'])  # Convert ObjectId to string
         return jsonify(ratings), 200
     except Exception as e:
         print(f"Error retrieving data: {e}")
         return jsonify({"success": False, "message": "Database error"}), 500
-
+    
+    
+@app.route('/getAverageRatings', methods=['GET'])
+def get_average_ratings():
+    try:
+        pipeline = [
+            {
+                "$group": {
+                    "_id": None,
+                    "avg_racoon_rating": {"$avg": "$racoon_rating"},
+                    "avg_wifi_rating": {"$avg": "$wifi_rating"},
+                    "avg_location_rating": {"$avg": "$location_rating"},
+                    "avg_diningHall_rating": {"$avg": "$diningHall_rating"},
+                    "avg_dorm_ratings": {"$avg": "$dorm_ratings"},
+                    "avg_safety_ratings": {"$avg": "$safety_ratings"},
+                    "avg_amenities_rating": {"$avg": "$amenities_rating"}
+                }
+            }
+        ]
+        averages = list(mongo.db.sixthRatings.aggregate(pipeline))
+        if averages:
+            return jsonify(averages[0]), 200
+        else:
+            return jsonify({"message": "No ratings found"}), 404
+    except Exception as e:
+        print(f"Error calculating averages: {e}")
+        return jsonify({"success": False, "message": "Database error"}), 500
 
 
 if __name__ == '__main__':
