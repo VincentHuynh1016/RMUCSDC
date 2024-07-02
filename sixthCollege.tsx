@@ -15,8 +15,20 @@ type Rating = {
   date: string;
 };
 
+type Averages = {
+  avg_racoon_rating: number;
+  avg_wifi_rating: number;
+  avg_location_rating: number;
+  avg_diningHall_rating: number;
+  avg_dorm_ratings: number;
+  avg_safety_ratings: number;
+  avg_amenities_rating: number;
+};
+
+
 export default function sixthCollege() {
   const [ratings, setRatings] = useState<Rating[]>([]);
+  const [averages, setAverages] = useState<Averages | null>(null);
 
   const fetchRatings = async () => {
     try {
@@ -28,8 +40,19 @@ export default function sixthCollege() {
     }
   };
 
+  const fetchAverages = async () => {
+    try {
+      const response = await fetch("http://localhost:8080/getAverageRatings");
+      const data = await response.json();
+      setAverages(data);
+    } catch (error) {
+      console.error("Error fetching averages:", error);
+    }
+  };
+
   useEffect(() => {
     fetchRatings();
+    fetchAverages();
   }, []);
 
   return (
@@ -84,6 +107,36 @@ export default function sixthCollege() {
           </button>
         </Link>
       </div>
+
+      <div className="mt-10 px-4 flex flex-col items-start">
+        <h2 className="text-xl font-semibold mb-4">Average Ratings</h2>
+        {averages ? (
+          <div className="border rounded p-4 bg-gray-100 text-black">
+            <p>
+              Average Racoon Rating: {averages.avg_racoon_rating.toFixed(2)}
+            </p>
+            <p>Average Wifi Rating: {averages.avg_wifi_rating.toFixed(2)}</p>
+            <p>
+              Average Location Rating: {averages.avg_location_rating.toFixed(2)}
+            </p>
+            <p>
+              Average Dining Hall Rating:{" "}
+              {averages.avg_diningHall_rating.toFixed(2)}
+            </p>
+            <p>Average Dorm Rating: {averages.avg_dorm_ratings.toFixed(2)}</p>
+            <p>
+              Average Safety Rating: {averages.avg_safety_ratings.toFixed(2)}
+            </p>
+            <p>
+              Average Amenities Rating:{" "}
+              {averages.avg_amenities_rating.toFixed(2)}
+            </p>
+          </div>
+        ) : (
+          <p>No average ratings available.</p>
+        )}
+      </div>
+      
 
       <div className="mt-10 px-4 flex flex-col items-start">
         <h2 className="text-xl font-semibold mb-4">All Ratings</h2>
