@@ -1,5 +1,4 @@
 "use client";
-import Image from "next/image";
 import Link from "next/link";
 import React, { useState, useEffect } from "react";
 
@@ -25,10 +24,14 @@ type Averages = {
   avg_amenities_rating: number;
 };
 
+type OverallScore = {
+  overall_score: number;
+};
 
-export default function sixthCollege() {
+export default function SixthCollege() {
   const [ratings, setRatings] = useState<Rating[]>([]);
   const [averages, setAverages] = useState<Averages | null>(null);
+  const [overallScore, setOverallScore] = useState<number | null>(null);
 
   const fetchRatings = async () => {
     try {
@@ -50,9 +53,20 @@ export default function sixthCollege() {
     }
   };
 
+  const fetchOverallScore = async () => {
+    try {
+      const response = await fetch("http://localhost:8080/overallScore");
+      const data: OverallScore = await response.json();
+      setOverallScore(data.overall_score);
+    } catch (error) {
+      console.error("Error fetching overall score:", error);
+    }
+  };
+
   useEffect(() => {
     fetchRatings();
     fetchAverages();
+    fetchOverallScore();
   }, []);
 
   return (
@@ -84,59 +98,63 @@ export default function sixthCollege() {
         className="flex self-center w-2/4 mt-10"
         src="/sixthicon.png"
         alt="Sixth College Icon"
-      ></img>
+      />
 
-      <div className="flex justify-end items-center h-full mt-10">
+      <div className="flex justify-between items-center h-full mt-10 px-4">
+        <div
+          className="border rounded p-4 bg-gray-100 text-black"
+          style={{ maxWidth: "300px" }}
+        >
+          {averages ? (
+            <>
+              <p>
+                Average Racoon Rating: {averages.avg_racoon_rating.toFixed(1)}
+              </p>
+              <p>Average Wifi Rating: {averages.avg_wifi_rating.toFixed(1)}</p>
+              <p>
+                Average Location Rating:{" "}
+                {averages.avg_location_rating.toFixed(1)}
+              </p>
+              <p>
+                Average Dining Hall Rating:{" "}
+                {averages.avg_diningHall_rating.toFixed(1)}
+              </p>
+              <p>Average Dorm Rating: {averages.avg_dorm_ratings.toFixed(1)}</p>
+              <p>
+                Average Safety Rating: {averages.avg_safety_ratings.toFixed(1)}
+              </p>
+              <p>
+                Average Amenities Rating:{" "}
+                {averages.avg_amenities_rating.toFixed(1)}
+              </p>
+            </>
+          ) : (
+            <p>No average ratings available.</p>
+          )}
+          {overallScore !== null && (
+            <p>Overall Score: {overallScore.toFixed(1)}</p>
+          )}
+        </div>
         <Link href="/ratingPage">
-          <button className="btn text-lg text-amber-300 w-auto px-15 mr-20 flex bg-sky-700">
+          <button className="btn text-lg text-amber-300 w-auto px-15 flex bg-sky-700">
             Write a Review{" "}
             <svg
               xmlns="http://www.w3.org/2000/svg"
               fill="none"
               viewBox="0 0 24 24"
-              stroke-width="1.5"
+              strokeWidth="1.5"
               stroke="currentColor"
               className="w-6 h-6 ml-2"
             >
               <path
-                stroke-linecap="round"
-                stroke-linejoin="round"
+                strokeLinecap="round"
+                strokeLinejoin="round"
                 d="m16.862 4.487 1.687-1.688a1.875 1.875 0 1 1 2.652 2.652L10.582 16.07a4.5 4.5 0 0 1-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 0 1 1.13-1.897l8.932-8.931Zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0 1 15.75 21H5.25A2.25 2.25 0 0 1 3 18.75V8.25A2.25 2.25 0 0 1 5.25 6H10"
               />
             </svg>
           </button>
         </Link>
       </div>
-
-      <div className="mt-10 px-4 flex flex-col items-start">
-        <h2 className="text-xl font-semibold mb-4">Average Ratings</h2>
-        {averages ? (
-          <div className="border rounded p-4 bg-gray-100 text-black">
-            <p>
-              Average Racoon Rating: {averages.avg_racoon_rating.toFixed(2)}
-            </p>
-            <p>Average Wifi Rating: {averages.avg_wifi_rating.toFixed(2)}</p>
-            <p>
-              Average Location Rating: {averages.avg_location_rating.toFixed(2)}
-            </p>
-            <p>
-              Average Dining Hall Rating:{" "}
-              {averages.avg_diningHall_rating.toFixed(2)}
-            </p>
-            <p>Average Dorm Rating: {averages.avg_dorm_ratings.toFixed(2)}</p>
-            <p>
-              Average Safety Rating: {averages.avg_safety_ratings.toFixed(2)}
-            </p>
-            <p>
-              Average Amenities Rating:{" "}
-              {averages.avg_amenities_rating.toFixed(2)}
-            </p>
-          </div>
-        ) : (
-          <p>No average ratings available.</p>
-        )}
-      </div>
-      
 
       <div className="mt-10 px-4 flex flex-col items-start">
         <h2 className="text-xl font-semibold mb-4">All Ratings</h2>
