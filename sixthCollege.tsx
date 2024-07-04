@@ -100,104 +100,110 @@ export default function SixthCollege() {
         alt="Sixth College Icon"
       />
 
-      <div className="flex justify-between items-center h-full mt-10 px-4">
-        <div className="ratings-container flex flex-col items-start bg-white p-4">
-          <div className="overall-score flex flex-col items-center mb-6">
+      <div className="flex justify-center items-center mt-10 px-4">
+        <div
+          className="flex items-start bg-white p-4 rounded-md shadow-lg"
+          style={{ maxWidth: "900px", width: "100%" }}
+        >
+          <div className="overall-score flex flex-col items-center justify-center w-1/3 p-4 border-r">
             <h1 className="text-6xl font-bold text-black">
               {overallScore !== null ? overallScore.toFixed(1) : "-"}
             </h1>
             <p style={{ color: "black" }}>Overall Quality</p>
           </div>
 
-          {averages ? (
-            <>
-              <div className="rating-item flex items-center mb-2">
-                <p className="text-lg font-semibold mr-auto text-black">
-                  Racoon Rating
-                </p>
-                <div className="rating-value text-black px-2 py-1 rounded-md">
-                  {averages.avg_racoon_rating.toFixed(1)}
+          <div className="flex flex-wrap justify-between w-2/3 p-4">
+            {averages ? (
+              <>
+                <div className="flex flex-col w-1/2">
+                  <div className="rating-item flex justify-between mb-2">
+                    <p className="text-lg font-semibold text-black">
+                      Racoon Rating
+                    </p>
+                    <div className="rating-value text-black px-2 py-1 rounded-md">
+                      {averages.avg_racoon_rating.toFixed(1)}
+                    </div>
+                  </div>
+                  <div className="rating-item flex justify-between mb-2">
+                    <p className="text-lg font-semibold text-black">
+                      Wifi Rating
+                    </p>
+                    <div className="rating-value text-black px-2 py-1 rounded-md">
+                      {averages.avg_wifi_rating.toFixed(1)}
+                    </div>
+                  </div>
+                  <div className="rating-item flex justify-between mb-2">
+                    <p className="text-lg font-semibold text-black">
+                      Location Rating
+                    </p>
+                    <div className="rating-value text-black px-2 py-1 rounded-md">
+                      {averages.avg_location_rating.toFixed(1)}
+                    </div>
+                  </div>
+                  <div className="rating-item flex justify-between mb-2">
+                    <p className="text-lg font-semibold text-black">
+                      Dining Hall Rating
+                    </p>
+                    <div className="rating-value text-black px-2 py-1 rounded-md">
+                      {averages.avg_diningHall_rating.toFixed(1)}
+                    </div>
+                  </div>
+                  <div className="rating-item flex justify-between mb-2">
+                    <p className="text-lg font-semibold text-black">
+                      Dorm Rating
+                    </p>
+                    <div className="rating-value text-black px-2 py-1 rounded-md">
+                      {averages.avg_dorm_ratings.toFixed(1)}
+                    </div>
+                  </div>
                 </div>
-              </div>
 
-              <div className="rating-item flex items-center mb-2">
-                <p className="text-lg font-semibold mr-auto text-black">
-                  Wifi Rating
-                </p>
-                <div className="rating-value text-black px-2 py-1 rounded-md">
-                  {averages.avg_wifi_rating.toFixed(1)}
+                <div className="flex flex-col w-1/2">
+                  <div className="rating-item flex justify-between mb-2">
+                    <p className="text-lg font-semibold text-black">
+                      Safety Rating
+                    </p>
+                    <div className="rating-value text-black px-2 py-1 rounded-md">
+                      {averages.avg_safety_ratings.toFixed(1)}
+                    </div>
+                  </div>
+                  <div className="rating-item flex justify-between mb-2">
+                    <p className="text-lg font-semibold text-black">
+                      Amenities Rating
+                    </p>
+                    <div className="rating-value text-black px-2 py-1 rounded-md">
+                      {averages.avg_amenities_rating.toFixed(1)}
+                    </div>
+                  </div>
                 </div>
-              </div>
-
-              <div className="rating-item flex items-center mb-2">
-                <p className="text-lg font-semibold mr-auto text-black">
-                  Location Rating
-                </p>
-                <div className="rating-value text-black px-2 py-1 rounded-md">
-                  {averages.avg_location_rating.toFixed(1)}
-                </div>
-              </div>
-
-              <div className="rating-item flex items-center mb-2">
-                <p className="text-lg font-semibold mr-auto text-black">
-                  Dining Hall Rating
-                </p>
-                <div className="rating-value text-black px-2 py-1 rounded-md">
-                  {averages.avg_diningHall_rating.toFixed(1)}
-                </div>
-              </div>
-
-              <div className="rating-item flex items-center mb-2">
-                <p className="text-lg font-semibold mr-auto text-black">
-                  Dorm Rating
-                </p>
-                <div className="rating-value text-black px-2 py-1 rounded-md">
-                  {averages.avg_dorm_ratings.toFixed(1)}
-                </div>
-              </div>
-
-              <div className="rating-item flex items-center mb-2">
-                <p className="text-lg font-semibold mr-auto text-black">
-                  Safety Rating
-                </p>
-                <div className="rating-value text-black px-2 py-1 rounded-md">
-                  {averages.avg_safety_ratings.toFixed(1)}
-                </div>
-              </div>
-
-              <div className="rating-item flex items-center mb-2">
-                <p className="text-lg font-semibold mr-auto text-black">
-                  Amenities Rating
-                </p>
-                <div className="rating-value text-black px-2 py-1 rounded-md">
-                  {averages.avg_amenities_rating.toFixed(1)}
-                </div>
-              </div>
-            </>
-          ) : (
-            <p className="text-black">No average ratings available.</p>
-          )}
+              </>
+            ) : (
+              <p className="text-black">No average ratings available.</p>
+            )}
+          </div>
         </div>
 
-        <Link href="/ratingPage">
-          <button className="btn text-lg text-amber-300 w-auto px-15 flex bg-sky-700">
-            Write a Review
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              fill="none"
-              viewBox="0 0 24 24"
-              strokeWidth="1.5"
-              stroke="currentColor"
-              className="w-6 h-6 ml-2"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                d="m16.862 4.487 1.687-1.688a1.875 1.875 0 1 1 2.652 2.652L10.582 16.07a4.5 4.5 0 0 1-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 0 1 1.13-1.897l8.932-8.931Zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0 1 15.75 21H5.25A2.25 2.25 0 0 1 3 18.75V8.25A2.25 2.25 0 0 1 5.25 6H10"
-              />
-            </svg>
-          </button>
-        </Link>
+        <div className="ml-6">
+          <Link href="/ratingPage">
+            <button className="btn text-lg text-amber-300 w-auto px-15 flex bg-sky-700">
+              Write a Review{" "}
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+                strokeWidth="1.5"
+                stroke="currentColor"
+                className="w-6 h-6 ml-2"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  d="m16.862 4.487 1.687-1.688a1.875 1.875 0 1 1 2.652 2.652L10.582 16.07a4.5 4.5 0 0 1-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 0 1 1.13-1.897l8.932-8.931Zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0 1 15.75 21H5.25A2.25 2.25 0 0 1 3 18.75V8.25A2.25 2.25 0 0 1 5.25 6H10"
+                />
+              </svg>
+            </button>
+          </Link>
+        </div>
       </div>
 
       <div className="mt-10 px-4 flex flex-col items-start">
