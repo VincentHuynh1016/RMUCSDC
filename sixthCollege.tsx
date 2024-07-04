@@ -103,9 +103,9 @@ export default function SixthCollege() {
       <div className="flex justify-center items-center mt-10 px-4">
         <div
           className="flex items-start bg-white p-4 rounded-md shadow-lg"
-          style={{ maxWidth: "900px", width: "100%" }}
+          style={{ maxWidth: "950px", width: "800%" }}
         >
-          <div className="overall-score flex flex-col items-center justify-center w-1/3 p-4 border-r">
+          <div className="overall-score flex flex-col items-center justify-center w-1/3 p-4 border-r mt-20">
             <h1 className="text-6xl font-bold text-black">
               {overallScore !== null ? overallScore.toFixed(1) : "-"}
             </h1>
@@ -117,42 +117,42 @@ export default function SixthCollege() {
               <>
                 <div className="flex flex-col w-1/2">
                   <div className="rating-item flex justify-between mb-2">
-                    <p className="text-lg font-semibold text-black">
+                    <p className="text-lg font-semibold text-black mr-1">
                       Racoon Rating
                     </p>
-                    <div className="rating-value text-black px-2 py-1 rounded-md">
+                    <div className="rating-value text-black px-1 py-1 rounded-md">
                       {averages.avg_racoon_rating.toFixed(1)}
                     </div>
                   </div>
                   <div className="rating-item flex justify-between mb-2">
-                    <p className="text-lg font-semibold text-black">
+                    <p className="text-lg font-semibold text-black mr-1">
                       Wifi Rating
                     </p>
-                    <div className="rating-value text-black px-2 py-1 rounded-md">
+                    <div className="rating-value text-black px-1 py-1 rounded-md">
                       {averages.avg_wifi_rating.toFixed(1)}
                     </div>
                   </div>
                   <div className="rating-item flex justify-between mb-2">
-                    <p className="text-lg font-semibold text-black">
+                    <p className="text-lg font-semibold text-black mr-1">
                       Location Rating
                     </p>
-                    <div className="rating-value text-black px-2 py-1 rounded-md">
+                    <div className="rating-value text-black px-1 py-1 rounded-md">
                       {averages.avg_location_rating.toFixed(1)}
                     </div>
                   </div>
                   <div className="rating-item flex justify-between mb-2">
-                    <p className="text-lg font-semibold text-black">
+                    <p className="text-lg font-semibold text-black mr-1">
                       Dining Hall Rating
                     </p>
-                    <div className="rating-value text-black px-2 py-1 rounded-md">
+                    <div className="rating-value text-black px-1 py-1 rounded-md">
                       {averages.avg_diningHall_rating.toFixed(1)}
                     </div>
                   </div>
                   <div className="rating-item flex justify-between mb-2">
-                    <p className="text-lg font-semibold text-black">
+                    <p className="text-lg font-semibold text-black mr-1">
                       Dorm Rating
                     </p>
-                    <div className="rating-value text-black px-2 py-1 rounded-md">
+                    <div className="rating-value text-black px-1 py-1 rounded-md">
                       {averages.avg_dorm_ratings.toFixed(1)}
                     </div>
                   </div>
@@ -160,18 +160,18 @@ export default function SixthCollege() {
 
                 <div className="flex flex-col w-1/2">
                   <div className="rating-item flex justify-between mb-2">
-                    <p className="text-lg font-semibold text-black">
+                    <p className="text-lg font-semibold text-black mr-1">
                       Safety Rating
                     </p>
-                    <div className="rating-value text-black px-2 py-1 rounded-md">
+                    <div className="rating-value text-black px-1 py-1 rounded-md">
                       {averages.avg_safety_ratings.toFixed(1)}
                     </div>
                   </div>
                   <div className="rating-item flex justify-between mb-2">
-                    <p className="text-lg font-semibold text-black">
+                    <p className="text-lg font-semibold text-black mr-1">
                       Amenities Rating
                     </p>
-                    <div className="rating-value text-black px-2 py-1 rounded-md">
+                    <div className="rating-value text-black px-1 py-1 rounded-md">
                       {averages.avg_amenities_rating.toFixed(1)}
                     </div>
                   </div>
