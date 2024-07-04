@@ -1,0 +1,126 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --foreground-rgb: 0, 0, 0;
+  --background-start-rgb: 214, 219, 220;
+  --background-end-rgb: 255, 255, 255;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --foreground-rgb: 255, 255, 255;
+    --background-start-rgb: 0, 0, 0;
+    --background-end-rgb: 0, 0, 0;
+  }
+}
+
+body {
+  color: rgb(var(--foreground-rgb));
+  background: linear-gradient(
+      to bottom,
+      transparent,
+      rgb(var(--background-end-rgb))
+    )
+    rgb(var(--background-start-rgb));
+}
+
+.star {
+  font-size: 2rem; 
+  cursor: pointer;
+  transition: color 0.2s; 
+}
+
+.filled {
+  color: #FFD700; 
+}
+
+.not-filled {
+  color: #D3D3D3; 
+}
+
+input[type='radio'].mask-star-2 {
+  -webkit-appearance: none; 
+  -moz-appearance: none;
+  appearance: none;
+  display: inline-block;
+  width: 2rem;
+  height: 2rem; 
+  background-size: contain; 
+  margin-right: 0.5rem; 
+  cursor: pointer; 
+}
+
+input[type='radio'].mask-star-2:checked {
+  background-color: #ffd700; 
+}
+
+input[type='radio'].mask-star-2:not(:checked) {
+  background-color: #d3d3d3;
+}
+
+
+.simple-box {
+  border: 1px solid #ccc;
+  border-radius: 8px; /* Rounded corners, but less pronounced than before */
+  padding: 20px; /* Space inside the box */
+  width: 800px; /* Width of the box */
+  height: 150px; /* Height of the box, adjust as needed */
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
+  background-color: #fff; /* White background */
+  display: flex; /* To align inner content */
+}
+
+
+
+#wrapper {
+  min-height: 155vh; 
+  background-color: white;
+  overflow-y: auto; 
+  
+}
+
+.ratings-container {
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  padding: 16px;
+  background-color: #f9f9f9;
+  width: 400px;
+}
+
+.overall-score h1 {
+  font-size: 4rem;
+  margin: 0;
+}
+
+.overall-score p {
+  color: #888;
+  margin: 0;
+}
+
+.rating-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 10px;
+}
+
+.rating-value {
+  padding: 10px 50px; 
+  font-weight: bold;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
