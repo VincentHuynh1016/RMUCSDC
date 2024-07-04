@@ -100,10 +100,15 @@ export default function SixthCollege() {
         alt="Sixth College Icon"
       />
 
-      <div className="flex justify-center items-center mt-10 px-4">
+      <div className="flex justify-between items-center">
         <div
           className="flex items-start bg-white p-4 rounded-md shadow-lg"
-          style={{ maxWidth: "950px", width: "800%" }}
+          style={{
+            maxWidth: "950px",
+            width: "100%",
+            marginRight: "auto",
+            marginLeft: "165px",
+          }}
         >
           <div className="overall-score flex flex-col items-center justify-center w-1/3 p-4 border-r mt-20">
             <h1 className="text-6xl font-bold text-black">
@@ -183,7 +188,7 @@ export default function SixthCollege() {
           </div>
         </div>
 
-        <div className="ml-6">
+        <div style={{ marginLeft: "50px" }}>
           <Link href="/ratingPage">
             <button className="btn text-lg text-amber-300 w-auto px-15 flex bg-sky-700">
               Write a Review{" "}
