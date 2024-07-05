@@ -442,18 +442,19 @@ export default function SixthCollege() {
                 return "bg-transparent"; // Default color
               };
 
-              const getSegments = (rating: number) => {
+              const RatingBar = ({ rating }: { rating: number }) => {
                 const filledSegments = Math.round(rating);
-                return Array.from({ length: 5 }).map((_, idx) => (
+                const segments = Array.from({ length: 5 }, (_, i) => (
                   <div
-                    key={idx}
-                    className={`h-4 w-1/5 ${
-                      idx < filledSegments
+                    key={i}
+                    className={`h-4 w-full rounded ${
+                      i < filledSegments
                         ? getRatingColor(rating)
                         : "bg-gray-200"
                     }`}
                   />
                 ));
+                return <div className="flex space-x-1 w-full">{segments}</div>;
               };
 
               return (
@@ -464,7 +465,7 @@ export default function SixthCollege() {
                   <div className="flex items-center mb-2">
                     <div
                       className={`text-3xl font-bold p-4 rounded ${getRatingColor(
-                        parseFloat(overallRating)
+                        overallRating as unknown as number
                       )}`}
                     >
                       {overallRating}
@@ -480,51 +481,37 @@ export default function SixthCollege() {
                   <div className="grid grid-cols-2 gap-4">
                     <div className="flex items-center">
                       <p className="font-semibold mr-2">Racoon Rating</p>
-                      <div className="flex flex-1 h-4 rounded overflow-hidden">
-                        {getSegments(rating.racoon_rating)}
-                      </div>
+                      <RatingBar rating={rating.racoon_rating} />
                       <span className="ml-2">{rating.racoon_rating}</span>
                     </div>
                     <div className="flex items-center">
                       <p className="font-semibold mr-2">Safety Rating</p>
-                      <div className="flex flex-1 h-4 rounded overflow-hidden">
-                        {getSegments(rating.safety_ratings)}
-                      </div>
+                      <RatingBar rating={rating.safety_ratings} />
                       <span className="ml-2">{rating.safety_ratings}</span>
                     </div>
                     <div className="flex items-center">
                       <p className="font-semibold mr-2">Wifi Rating</p>
-                      <div className="flex flex-1 h-4 rounded overflow-hidden">
-                        {getSegments(rating.wifi_rating)}
-                      </div>
+                      <RatingBar rating={rating.wifi_rating} />
                       <span className="ml-2">{rating.wifi_rating}</span>
                     </div>
                     <div className="flex items-center">
                       <p className="font-semibold mr-2">Amenities Rating</p>
-                      <div className="flex flex-1 h-4 rounded overflow-hidden">
-                        {getSegments(rating.amenities_rating)}
-                      </div>
+                      <RatingBar rating={rating.amenities_rating} />
                       <span className="ml-2">{rating.amenities_rating}</span>
                     </div>
                     <div className="flex items-center">
                       <p className="font-semibold mr-2">Location Rating</p>
-                      <div className="flex flex-1 h-4 rounded overflow-hidden">
-                        {getSegments(rating.location_rating)}
-                      </div>
+                      <RatingBar rating={rating.location_rating} />
                       <span className="ml-2">{rating.location_rating}</span>
                     </div>
                     <div className="flex items-center">
                       <p className="font-semibold mr-2">Dorm Rating</p>
-                      <div className="flex flex-1 h-4 rounded overflow-hidden">
-                        {getSegments(rating.dorm_ratings)}
-                      </div>
+                      <RatingBar rating={rating.dorm_ratings} />
                       <span className="ml-2">{rating.dorm_ratings}</span>
                     </div>
                     <div className="flex items-center">
                       <p className="font-semibold mr-2">Dining Hall Rating</p>
-                      <div className="flex flex-1 h-4 rounded overflow-hidden">
-                        {getSegments(rating.diningHall_rating)}
-                      </div>
+                      <RatingBar rating={rating.diningHall_rating} />
                       <span className="ml-2">{rating.diningHall_rating}</span>
                     </div>
                   </div>
