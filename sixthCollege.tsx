@@ -28,6 +28,17 @@ type OverallScore = {
   overall_score: number;
 };
 
+const getRatingColor = (rating: number) => {
+  if (rating >= 1 && rating <= 2.9) {
+    return "#FFCDD2"; 
+  } else if (rating >= 3 && rating <= 3.9) {
+    return "#FFF9C4"; 
+  } else if (rating >= 4 && rating <= 5) {
+    return "#C8E6C9";
+  }
+  return "transparent"; 
+};
+
 export default function SixthCollege() {
   const [ratings, setRatings] = useState<Rating[]>([]);
   const [averages, setAverages] = useState<Averages | null>(null);
@@ -110,7 +121,10 @@ export default function SixthCollege() {
             marginLeft: "140px",
           }}
         >
-          <div className="overall-score flex flex-col items-center justify-center w-1/3 p-4 border-r mt-20">
+          <div
+            className="overall-score flex flex-col items-center justify-center w-1/3 p-4 border-r"
+            style={{ marginTop: "120px" }}
+          >
             <h1 className="text-6xl font-bold text-black">
               {overallScore !== null ? overallScore.toFixed(1) : "-"}
             </h1>
@@ -190,7 +204,15 @@ export default function SixthCollege() {
                         Racoon Rating
                       </p>
                     </div>
-                    <div className="rating-value text-black px-1 py-1 rounded-md">
+                    <div
+                      className="rating-value text-black px-1 py-1 rounded-md"
+                      style={{
+                        backgroundColor: getRatingColor(
+                          averages.avg_racoon_rating
+                        ),
+                        
+                      }}
+                    >
                       {averages.avg_racoon_rating.toFixed(1)}
                     </div>
                   </div>
@@ -208,7 +230,14 @@ export default function SixthCollege() {
                         Wifi Rating
                       </p>
                     </div>
-                    <div className="rating-value text-black px-1 py-1 rounded-md">
+                    <div
+                      className="rating-value text-black px-1 py-1 rounded-md"
+                      style={{
+                        backgroundColor: getRatingColor(
+                          averages.avg_wifi_rating
+                        ),
+                      }}
+                    >
                       {averages.avg_wifi_rating.toFixed(1)}
                     </div>
                   </div>
@@ -226,7 +255,14 @@ export default function SixthCollege() {
                         Location Rating
                       </p>
                     </div>
-                    <div className="rating-value text-black px-1 py-1 rounded-md">
+                    <div
+                      className="rating-value text-black px-1 py-1 rounded-md"
+                      style={{
+                        backgroundColor: getRatingColor(
+                          averages.avg_location_rating
+                        ),
+                      }}
+                    >
                       {averages.avg_location_rating.toFixed(1)}
                     </div>
                   </div>
@@ -244,7 +280,14 @@ export default function SixthCollege() {
                         Dining Hall Rating
                       </p>
                     </div>
-                    <div className="rating-value text-black px-1 py-1 rounded-md">
+                    <div
+                      className="rating-value text-black px-1 py-1 rounded-md"
+                      style={{
+                        backgroundColor: getRatingColor(
+                          averages.avg_diningHall_rating
+                        ),
+                      }}
+                    >
                       {averages.avg_diningHall_rating.toFixed(1)}
                     </div>
                   </div>
@@ -262,7 +305,14 @@ export default function SixthCollege() {
                         Dorm Rating
                       </p>
                     </div>
-                    <div className="rating-value text-black px-1 py-1 rounded-md">
+                    <div
+                      className="rating-value text-black px-1 py-1 rounded-md"
+                      style={{
+                        backgroundColor: getRatingColor(
+                          averages.avg_dorm_ratings
+                        ),
+                      }}
+                    >
                       {averages.avg_dorm_ratings.toFixed(1)}
                     </div>
                   </div>
@@ -282,7 +332,14 @@ export default function SixthCollege() {
                         Safety Rating
                       </p>
                     </div>
-                    <div className="rating-value text-black px-1 py-1 rounded-md">
+                    <div
+                      className="rating-value text-black px-1 py-1 rounded-md"
+                      style={{
+                        backgroundColor: getRatingColor(
+                          averages.avg_safety_ratings
+                        ),
+                      }}
+                    >
                       {averages.avg_safety_ratings.toFixed(1)}
                     </div>
                   </div>
@@ -300,7 +357,14 @@ export default function SixthCollege() {
                         Amenities Rating
                       </p>
                     </div>
-                    <div className="rating-value text-black px-1 py-1 rounded-md">
+                    <div
+                      className="rating-value text-black px-1 py-1 rounded-md"
+                      style={{
+                        backgroundColor: getRatingColor(
+                          averages.avg_amenities_rating
+                        ),
+                      }}
+                    >
                       {averages.avg_amenities_rating.toFixed(1)}
                     </div>
                   </div>
