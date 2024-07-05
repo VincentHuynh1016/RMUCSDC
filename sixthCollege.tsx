@@ -210,7 +210,8 @@ export default function SixthCollege() {
                         backgroundColor: getRatingColor(
                           averages.avg_racoon_rating
                         ),
-                        
+                        padding: "5px 20px",
+                        marginRight: "30px",
                       }}
                     >
                       {averages.avg_racoon_rating.toFixed(1)}
@@ -236,6 +237,8 @@ export default function SixthCollege() {
                         backgroundColor: getRatingColor(
                           averages.avg_wifi_rating
                         ),
+                        padding: "5px 20px",
+                        marginRight: "30px",
                       }}
                     >
                       {averages.avg_wifi_rating.toFixed(1)}
@@ -261,6 +264,8 @@ export default function SixthCollege() {
                         backgroundColor: getRatingColor(
                           averages.avg_location_rating
                         ),
+                        padding: "5px 20px",
+                        marginRight: "30px",
                       }}
                     >
                       {averages.avg_location_rating.toFixed(1)}
@@ -286,6 +291,8 @@ export default function SixthCollege() {
                         backgroundColor: getRatingColor(
                           averages.avg_diningHall_rating
                         ),
+                        padding: "5px 20px",
+                        marginRight: "30px",
                       }}
                     >
                       {averages.avg_diningHall_rating.toFixed(1)}
@@ -311,6 +318,8 @@ export default function SixthCollege() {
                         backgroundColor: getRatingColor(
                           averages.avg_dorm_ratings
                         ),
+                        padding: "5px 20px",
+                        marginRight: "30px",
                       }}
                     >
                       {averages.avg_dorm_ratings.toFixed(1)}
@@ -338,6 +347,8 @@ export default function SixthCollege() {
                         backgroundColor: getRatingColor(
                           averages.avg_safety_ratings
                         ),
+                        padding: "5px 20px",
+                        marginRight: "30px",
                       }}
                     >
                       {averages.avg_safety_ratings.toFixed(1)}
@@ -363,6 +374,8 @@ export default function SixthCollege() {
                         backgroundColor: getRatingColor(
                           averages.avg_amenities_rating
                         ),
+                        padding: "5px 20px",
+                        marginRight: "30px",
                       }}
                     >
                       {averages.avg_amenities_rating.toFixed(1)}
