@@ -415,8 +415,8 @@ export default function SixthCollege() {
       <div className="mt-10 px-4 flex flex-col items-start">
         <h2 className="text-xl font-semibold mb-4">All Ratings</h2>
         <div
-          className="w-3/4"
-          style={{ marginLeft: "150px", maxWidth: "1000px" }}
+          className="w-full"
+          style={{ marginLeft: "150px", maxWidth: "1200px" }}
         >
           {ratings.length > 0 ? (
             ratings.map((rating, index) => {
@@ -460,59 +460,94 @@ export default function SixthCollege() {
               return (
                 <div
                   key={index}
-                  className="border rounded p-4 mb-4 bg-gray-100 text-black"
+                  className="border rounded p-6 mb-6 bg-gray-100 text-black"
                 >
-                  <div className="flex items-center mb-2">
+                  <div className="flex items-center mb-4">
                     <div
-                      className={`text-3xl font-bold p-4 rounded ${getRatingColor(
+                      className={`text-4xl font-bold p-5 rounded ${getRatingColor(
                         overallRating as unknown as number
                       )}`}
                     >
                       {overallRating}
                     </div>
-                    <div className="ml-4">
-                      <p className="text-lg font-semibold">Overall</p>
+                    <div className="ml-6">
+                      <p className="text-2xl font-semibold">Overall</p>
                     </div>
                   </div>
 
-                  <p className="mb-2">{rating.comment}</p>
-                  <p className="text-right text-sm mb-2">{rating.date}</p>
+                  <p className="mb-4">{rating.comment}</p>
+                  <p className="text-right text-sm mb-4">{rating.date}</p>
 
-                  <div className="grid grid-cols-2 gap-4">
+                  <div className="grid grid-cols-2 gap-6">
                     <div className="flex items-center">
-                      <p className="font-semibold mr-2">Racoon Rating</p>
+                      <p
+                        className="font-semibold mr-4"
+                        style={{ width: "150px" }}
+                      >
+                        Racoon
+                      </p>
                       <RatingBar rating={rating.racoon_rating} />
-                      <span className="ml-2">{rating.racoon_rating}</span>
+                      <span className="ml-4">{rating.racoon_rating}</span>
                     </div>
                     <div className="flex items-center">
-                      <p className="font-semibold mr-2">Safety Rating</p>
+                      <p
+                        className="font-semibold mr-4"
+                        style={{ width: "150px" }}
+                      >
+                        Safety
+                      </p>
                       <RatingBar rating={rating.safety_ratings} />
-                      <span className="ml-2">{rating.safety_ratings}</span>
+                      <span className="ml-4">{rating.safety_ratings}</span>
                     </div>
                     <div className="flex items-center">
-                      <p className="font-semibold mr-2">Wifi Rating</p>
+                      <p
+                        className="font-semibold mr-4"
+                        style={{ width: "150px" }}
+                      >
+                        Wifi
+                      </p>
                       <RatingBar rating={rating.wifi_rating} />
-                      <span className="ml-2">{rating.wifi_rating}</span>
+                      <span className="ml-4">{rating.wifi_rating}</span>
                     </div>
                     <div className="flex items-center">
-                      <p className="font-semibold mr-2">Amenities Rating</p>
+                      <p
+                        className="font-semibold mr-4"
+                        style={{ width: "150px" }}
+                      >
+                        Amenities
+                      </p>
                       <RatingBar rating={rating.amenities_rating} />
-                      <span className="ml-2">{rating.amenities_rating}</span>
+                      <span className="ml-4">{rating.amenities_rating}</span>
                     </div>
                     <div className="flex items-center">
-                      <p className="font-semibold mr-2">Location Rating</p>
+                      <p
+                        className="font-semibold mr-4"
+                        style={{ width: "150px" }}
+                      >
+                        Location
+                      </p>
                       <RatingBar rating={rating.location_rating} />
-                      <span className="ml-2">{rating.location_rating}</span>
+                      <span className="ml-4">{rating.location_rating}</span>
                     </div>
                     <div className="flex items-center">
-                      <p className="font-semibold mr-2">Dorm Rating</p>
+                      <p
+                        className="font-semibold mr-4"
+                        style={{ width: "150px" }}
+                      >
+                        Dorm
+                      </p>
                       <RatingBar rating={rating.dorm_ratings} />
-                      <span className="ml-2">{rating.dorm_ratings}</span>
+                      <span className="ml-4">{rating.dorm_ratings}</span>
                     </div>
                     <div className="flex items-center">
-                      <p className="font-semibold mr-2">Dining Hall Rating</p>
+                      <p
+                        className="font-semibold mr-4"
+                        style={{ width: "150px" }}
+                      >
+                        Dining Hall
+                      </p>
                       <RatingBar rating={rating.diningHall_rating} />
-                      <span className="ml-2">{rating.diningHall_rating}</span>
+                      <span className="ml-4">{rating.diningHall_rating}</span>
                     </div>
                   </div>
                 </div>
