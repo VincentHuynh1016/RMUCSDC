@@ -30,13 +30,13 @@ type OverallScore = {
 
 const getRatingColor = (rating: number) => {
   if (rating >= 1 && rating <= 2.9) {
-    return "#FFCDD2"; 
+    return "#FFCDD2";
   } else if (rating >= 3 && rating <= 3.9) {
-    return "#FFF9C4"; 
+    return "#FFF9C4";
   } else if (rating >= 4 && rating <= 5) {
     return "#C8E6C9";
   }
-  return "transparent"; 
+  return "transparent";
 };
 
 export default function SixthCollege() {
@@ -431,7 +431,7 @@ export default function SixthCollege() {
                 7
               ).toFixed(1);
 
-              const getRatingColor = (rating) => {
+              const getRatingColor = (rating: number) => {
                 if (rating >= 1 && rating <= 2.9) {
                   return "bg-red-200";
                 } else if (rating >= 3 && rating <= 3.9) {
@@ -442,6 +442,20 @@ export default function SixthCollege() {
                 return "bg-transparent"; // Default color
               };
 
+              const getSegments = (rating: number) => {
+                const filledSegments = Math.round(rating);
+                return Array.from({ length: 5 }).map((_, idx) => (
+                  <div
+                    key={idx}
+                    className={`h-4 w-1/5 ${
+                      idx < filledSegments
+                        ? getRatingColor(rating)
+                        : "bg-gray-200"
+                    }`}
+                  />
+                ));
+              };
+
               return (
                 <div
                   key={index}
@@ -450,7 +464,7 @@ export default function SixthCollege() {
                   <div className="flex items-center mb-2">
                     <div
                       className={`text-3xl font-bold p-4 rounded ${getRatingColor(
-                        overallRating
+                        parseFloat(overallRating)
                       )}`}
                     >
                       {overallRating}
@@ -466,65 +480,51 @@ export default function SixthCollege() {
                   <div className="grid grid-cols-2 gap-4">
                     <div className="flex items-center">
                       <p className="font-semibold mr-2">Racoon Rating</p>
-                      <div
-                        className={`flex-1 h-4 rounded ${getRatingColor(
-                          rating.racoon_rating
-                        )}`}
-                      />
+                      <div className="flex flex-1 h-4 rounded overflow-hidden">
+                        {getSegments(rating.racoon_rating)}
+                      </div>
                       <span className="ml-2">{rating.racoon_rating}</span>
                     </div>
                     <div className="flex items-center">
                       <p className="font-semibold mr-2">Safety Rating</p>
-                      <div
-                        className={`flex-1 h-4 rounded ${getRatingColor(
-                          rating.safety_ratings
-                        )}`}
-                      />
+                      <div className="flex flex-1 h-4 rounded overflow-hidden">
+                        {getSegments(rating.safety_ratings)}
+                      </div>
                       <span className="ml-2">{rating.safety_ratings}</span>
                     </div>
                     <div className="flex items-center">
                       <p className="font-semibold mr-2">Wifi Rating</p>
-                      <div
-                        className={`flex-1 h-4 rounded ${getRatingColor(
-                          rating.wifi_rating
-                        )}`}
-                      />
+                      <div className="flex flex-1 h-4 rounded overflow-hidden">
+                        {getSegments(rating.wifi_rating)}
+                      </div>
                       <span className="ml-2">{rating.wifi_rating}</span>
                     </div>
                     <div className="flex items-center">
                       <p className="font-semibold mr-2">Amenities Rating</p>
-                      <div
-                        className={`flex-1 h-4 rounded ${getRatingColor(
-                          rating.amenities_rating
-                        )}`}
-                      />
+                      <div className="flex flex-1 h-4 rounded overflow-hidden">
+                        {getSegments(rating.amenities_rating)}
+                      </div>
                       <span className="ml-2">{rating.amenities_rating}</span>
                     </div>
                     <div className="flex items-center">
                       <p className="font-semibold mr-2">Location Rating</p>
-                      <div
-                        className={`flex-1 h-4 rounded ${getRatingColor(
-                          rating.location_rating
-                        )}`}
-                      />
+                      <div className="flex flex-1 h-4 rounded overflow-hidden">
+                        {getSegments(rating.location_rating)}
+                      </div>
                       <span className="ml-2">{rating.location_rating}</span>
                     </div>
                     <div className="flex items-center">
                       <p className="font-semibold mr-2">Dorm Rating</p>
-                      <div
-                        className={`flex-1 h-4 rounded ${getRatingColor(
-                          rating.dorm_ratings
-                        )}`}
-                      />
+                      <div className="flex flex-1 h-4 rounded overflow-hidden">
+                        {getSegments(rating.dorm_ratings)}
+                      </div>
                       <span className="ml-2">{rating.dorm_ratings}</span>
                     </div>
                     <div className="flex items-center">
                       <p className="font-semibold mr-2">Dining Hall Rating</p>
-                      <div
-                        className={`flex-1 h-4 rounded ${getRatingColor(
-                          rating.diningHall_rating
-                        )}`}
-                      />
+                      <div className="flex flex-1 h-4 rounded overflow-hidden">
+                        {getSegments(rating.diningHall_rating)}
+                      </div>
                       <span className="ml-2">{rating.diningHall_rating}</span>
                     </div>
                   </div>
