@@ -104,7 +104,7 @@ export default function SixthCollege() {
         <div
           className="flex items-start bg-white p-4 rounded-md shadow-lg"
           style={{
-            maxWidth: "950px",
+            maxWidth: "1000px",
             width: "100%",
             marginRight: "auto",
             marginLeft: "165px",
@@ -188,7 +188,7 @@ export default function SixthCollege() {
           </div>
         </div>
 
-        <div style={{ marginLeft: "50px" }}>
+        <div style={{ marginRight: "50px" }}>
           <Link href="/ratingPage">
             <button className="btn text-lg text-amber-300 w-auto px-15 flex bg-sky-700">
               Write a Review{" "}
