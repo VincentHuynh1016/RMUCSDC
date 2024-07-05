@@ -123,7 +123,7 @@ export default function SixthCollege() {
         >
           <div
             className="overall-score flex flex-col items-center justify-center w-1/3 p-4 border-r"
-            style={{ marginTop: "120px" }}
+            style={{ marginTop: "95px" }}
           >
             <h1 className="text-6xl font-bold text-black">
               {overallScore !== null ? overallScore.toFixed(1) : "-"}
@@ -419,22 +419,118 @@ export default function SixthCollege() {
           style={{ marginLeft: "150px", maxWidth: "1000px" }}
         >
           {ratings.length > 0 ? (
-            ratings.map((rating, index) => (
-              <div
-                key={index}
-                className="border rounded p-4 mb-4 bg-gray-100 text-black"
-              >
-                <p>Racoon Rating: {rating.racoon_rating}</p>
-                <p>Wifi Rating: {rating.wifi_rating}</p>
-                <p>Location Rating: {rating.location_rating}</p>
-                <p>Dining Hall Rating: {rating.diningHall_rating}</p>
-                <p>Dorm Rating: {rating.dorm_ratings}</p>
-                <p>Safety Rating: {rating.safety_ratings}</p>
-                <p>Amenities Rating: {rating.amenities_rating}</p>
-                <p>Comment: {rating.comment}</p>
-                <p>Date: {rating.date}</p>
-              </div>
-            ))
+            ratings.map((rating, index) => {
+              const overallRating = (
+                (rating.racoon_rating +
+                  rating.wifi_rating +
+                  rating.location_rating +
+                  rating.diningHall_rating +
+                  rating.dorm_ratings +
+                  rating.safety_ratings +
+                  rating.amenities_rating) /
+                7
+              ).toFixed(1);
+
+              const getRatingColor = (rating) => {
+                if (rating >= 1 && rating <= 2.9) {
+                  return "bg-red-200";
+                } else if (rating >= 3 && rating <= 3.9) {
+                  return "bg-yellow-200";
+                } else if (rating >= 4 && rating <= 5) {
+                  return "bg-green-200";
+                }
+                return "bg-transparent"; // Default color
+              };
+
+              return (
+                <div
+                  key={index}
+                  className="border rounded p-4 mb-4 bg-gray-100 text-black"
+                >
+                  <div className="flex items-center mb-2">
+                    <div
+                      className={`text-3xl font-bold p-4 rounded ${getRatingColor(
+                        overallRating
+                      )}`}
+                    >
+                      {overallRating}
+                    </div>
+                    <div className="ml-4">
+                      <p className="text-lg font-semibold">Overall</p>
+                    </div>
+                  </div>
+
+                  <p className="mb-2">{rating.comment}</p>
+                  <p className="text-right text-sm mb-2">{rating.date}</p>
+
+                  <div className="grid grid-cols-2 gap-4">
+                    <div className="flex items-center">
+                      <p className="font-semibold mr-2">Racoon Rating</p>
+                      <div
+                        className={`flex-1 h-4 rounded ${getRatingColor(
+                          rating.racoon_rating
+                        )}`}
+                      />
+                      <span className="ml-2">{rating.racoon_rating}</span>
+                    </div>
+                    <div className="flex items-center">
+                      <p className="font-semibold mr-2">Safety Rating</p>
+                      <div
+                        className={`flex-1 h-4 rounded ${getRatingColor(
+                          rating.safety_ratings
+                        )}`}
+                      />
+                      <span className="ml-2">{rating.safety_ratings}</span>
+                    </div>
+                    <div className="flex items-center">
+                      <p className="font-semibold mr-2">Wifi Rating</p>
+                      <div
+                        className={`flex-1 h-4 rounded ${getRatingColor(
+                          rating.wifi_rating
+                        )}`}
+                      />
+                      <span className="ml-2">{rating.wifi_rating}</span>
+                    </div>
+                    <div className="flex items-center">
+                      <p className="font-semibold mr-2">Amenities Rating</p>
+                      <div
+                        className={`flex-1 h-4 rounded ${getRatingColor(
+                          rating.amenities_rating
+                        )}`}
+                      />
+                      <span className="ml-2">{rating.amenities_rating}</span>
+                    </div>
+                    <div className="flex items-center">
+                      <p className="font-semibold mr-2">Location Rating</p>
+                      <div
+                        className={`flex-1 h-4 rounded ${getRatingColor(
+                          rating.location_rating
+                        )}`}
+                      />
+                      <span className="ml-2">{rating.location_rating}</span>
+                    </div>
+                    <div className="flex items-center">
+                      <p className="font-semibold mr-2">Dorm Rating</p>
+                      <div
+                        className={`flex-1 h-4 rounded ${getRatingColor(
+                          rating.dorm_ratings
+                        )}`}
+                      />
+                      <span className="ml-2">{rating.dorm_ratings}</span>
+                    </div>
+                    <div className="flex items-center">
+                      <p className="font-semibold mr-2">Dining Hall Rating</p>
+                      <div
+                        className={`flex-1 h-4 rounded ${getRatingColor(
+                          rating.diningHall_rating
+                        )}`}
+                      />
+                      <span className="ml-2">{rating.diningHall_rating}</span>
+                    </div>
+                  </div>
+                </div>
+              );
+            })
           ) : (
             <p>No ratings available.</p>
           )}
