@@ -3,7 +3,6 @@ import Image from "next/image";
 import Link from "next/link";
 import React, { useState } from "react";
 
-
 function ratingPage() {
   const [racoonRating, setRacoonRating] = useState(0);
   const [wifiRating, setWifiRating] = useState(0);
@@ -13,7 +12,6 @@ function ratingPage() {
   const [safetyRating, setsafetyRating] = useState(0);
   const [amenitiesRating, setamenitiesRating] = useState(0);
   const [comment, setComment] = useState("");
-
 
   const handleRacoonRating = (star: number) => {
     setRacoonRating(racoonRating === star ? 0 : star);
@@ -50,11 +48,10 @@ function ratingPage() {
   };
 
   const [message, setMessage] = useState("");
-  
 
   const submitRating = async () => {
     try {
-      const response = await fetch("http://localhost:8080/submitRating", {
+      const response = await fetch("http://localhost:8080/sixthRating", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -92,7 +89,6 @@ function ratingPage() {
       setMessage("Failed to connect to server");
     }
   };
-
 
   return (
     <div
