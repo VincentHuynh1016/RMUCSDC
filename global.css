@@ -16,10 +16,18 @@
   }
 }
 
-body {
-  color: rgb(0, 0, 0);
-  background-color: white;
+* {
+  box-sizing: border-box;
 }
+
+  html, body, #__next {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    width: 100%;
+    overflow-x: hidden;
+  }
+
 
 .star {
   font-size: 2rem; 
